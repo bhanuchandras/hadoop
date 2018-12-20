@@ -27,7 +27,7 @@ resource "google_compute_instance" "hadoop-m" {
   }
   provisioner "file" {
     source = "/home/bhanuchandra_sabbavarapu/.ssh/google_compute_engine"
-    destination = "/home/bhanuchandra_sabbavarapu/.ssh/google_compuete_engine"
+    destination = "/home/bhanuchandra_sabbavarapu/.ssh/google_compute_engine"
     connection {
       type    = "ssh"
       user    = "bhanuchandra_sabbavarapu"
