@@ -26,6 +26,17 @@ resource "google_compute_instance" "hadoop-m" {
     }
   }
   provisioner "file" {
+    source = "playbook.yaml"
+    destination = "/home/bhanuchandra_sabbavarapu/playbook.yaml"
+    connection {
+      type    = "ssh"
+      user    = "bhanuchandra_sabbavarapu"
+      timeout = "120s"
+      agent       = false
+      private_key = "${file("/home/bhanuchandra_sabbavarapu/.ssh/google_compute_engine")}"
+    }
+  }
+  provisioner "file" {
     source = "/home/bhanuchandra_sabbavarapu/.ssh/google_compute_engine"
     destination = "/home/bhanuchandra_sabbavarapu/.ssh/google_compute_engine"
     connection {
