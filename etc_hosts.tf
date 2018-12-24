@@ -48,3 +48,22 @@ inline = [
     }
   }
 }
+resource "null_resource" "ansible_play" {
+
+  depends_on = ["google_compute_instance.hadoop-m","null_resource.ansible"]
+
+  ##Create Masters Inventory
+  provisioner "remote-exec" {
+inline = [
+      "ansible-playbook playbook.yaml"
+    ]
+    connection {
+      host    = "${google_compute_instance.hadoop-m.network_interface.0.access_config.0.nat_ip}"
+      type    = "ssh"
+      user    = "bhanuchandra_sabbavarapu"
+      timeout = "120s"
+      agent       = false
+      private_key = "${file("/home/bhanuchandra_sabbavarapu/.ssh/google_compute_engine")}"
+    }
+  }
+}
