@@ -36,8 +36,17 @@
         - name: rename the dir
           command: mv /home/hadoop/hadoop-2.9.2 /home/hadoop/hadoop
           when: new_archive|changed
+
         - name: Ansible create file with content example
           copy:
             dest: "/home/hadoop/.profile"
             content: |
                  PATH=/home/hadoop/hadoop/bin:/home/hadoop/hadoop/sbin:$PATH
+
+        - name:
+          template:
+            src: templates/hadoop-env.sh
+            dest: /home/hadoop/hadoop/etc/hadoop-env.sh
+            owner: hadoop
+            group: hadoop
+            mode: 0644
