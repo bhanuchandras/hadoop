@@ -1,7 +1,7 @@
 resource "google_compute_instance" "hadoop-m" {
   project      = "cloudjupyter-bhanu"
   machine_type = "g1-small"
-  zone         = "asia-south1-c"
+  zone         = "asia-south1-a"
   name = "hadoop-master"
 
   boot_disk {
@@ -39,6 +39,17 @@ resource "google_compute_instance" "hadoop-m" {
   provisioner "file" {
     source = "playbook-java.yaml"
     destination = "/home/bhanuchandra_sabbavarapu/playbook-java.yaml"
+    connection {
+      type    = "ssh"
+      user    = "bhanuchandra_sabbavarapu"
+      timeout = "120s"
+      agent       = false
+      private_key = "${file("/home/bhanuchandra_sabbavarapu/.ssh/google_compute_engine")}"
+    }
+  }
+  provisioner "file" {
+    source = "playbook-hadoop.yaml"
+    destination = "/home/bhanuchandra_sabbavarapu/playbook-hadoop.yaml"
     connection {
       type    = "ssh"
       user    = "bhanuchandra_sabbavarapu"

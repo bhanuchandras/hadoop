@@ -55,7 +55,8 @@ resource "null_resource" "ansible_play" {
   ##Create Masters Inventory
   provisioner "remote-exec" {
 inline = [
-      "ansible-playbook playbook.yaml"
+      "ansible-playbook playbook.yaml",
+      "ansible-playbook playbook-hadoop.yaml"
     ]
     connection {
       host    = "${google_compute_instance.hadoop-m.network_interface.0.access_config.0.nat_ip}"

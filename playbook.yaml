@@ -5,3 +5,17 @@
   tasks:
   - name: Install java
     yum: pkg=java-1.8.0-openjdk-src.x86_64 state=present
+  - name: create group
+    group:
+      name: hadoop
+      state: present
+  - name: Create a login user
+    user:
+      name: hadoop
+      password: '$6$.j5HC8qcikF$fwgmXF0jLwbGvMdquOPFQePrfj75RkMdHMHtHkj/xEuXNCQfui9PzPBpFwvnr2iHArhwPAPZrOPpcF9oFi2781'
+      groups: hadoop   # Empty by default.
+      state: present
+      shell: /bin/bash       # Defaults to /bin/bash
+      system: no             # Defaults to no
+      createhome: yes        # Defaults to yes
+      home: /home/hadoop  # Defaults to /home/<username>

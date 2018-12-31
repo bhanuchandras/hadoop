@@ -2,7 +2,7 @@ resource "google_compute_instance" "hadoop-n" {
   project      = "cloudjupyter-bhanu"
   count	       = 2
   machine_type = "g1-small"
-  zone         = "asia-south1-c"
+  zone         = "asia-south1-a"
   name = "${format("hadoop-node-%03d", count.index + 1)}"
 
   boot_disk {
