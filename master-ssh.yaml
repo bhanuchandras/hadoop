@@ -1,0 +1,19 @@
+---
+- hosts: hadoop-master
+  become: yes
+  become_user: hadoop
+  tasks:
+  - name: Create keys
+    command: ssh-keygen -b 2048 -t rsa -f /home/hadoop/.ssh/id_rsa -q -N ""
+    args:
+      creates: /home/hadoop/.ssh/id_rsa
+
+  - name: pub key
+    shell: cat /home/hadoop/.ssh/id_rsa.pub
+    register: pub_key
+
+  - set_fact: 
+      public_key={{ pub_key.stdout }}
+
+  - debug:
+      var=public_key
