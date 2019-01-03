@@ -19,17 +19,20 @@
       system: no             # Defaults to no
       createhome: yes        # Defaults to yes
       home: /home/hadoop  # Defaults to /home/<username>
-  - file:
+  - copy:
        src: /home/bhanuchandra_sabbavarapu/.ssh/google_compute_engine
        dest: /home/bhanuchandra_sabbavarapu/.ssh/google_compute_engine
        owner: bhanuchandra_sabbavarapu
        group: bhanuchandra_sabbavarapu
-       state: absent
        mode: 0600
   - file:
+       dest: /home/hadoop/.ssh
+       owner: hadoop
+       group: hadoop
+       state: directory
+  - copy:
        src: /home/bhanuchandra_sabbavarapu/.ssh/google_compute_engine
        dest: /home/hadoop/.ssh/google_compute_engine
        owner: hadoop
        group: hadoop
-       state: absent
        mode: 0600
