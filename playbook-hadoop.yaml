@@ -41,7 +41,15 @@
           copy:
             dest: "/home/hadoop/.profile"
             content: |
-                 PATH=/home/hadoop/hadoop/bin:/home/hadoop/hadoop/sbin:$PATH
+                 export PATH=/home/hadoop/hadoop/bin:/home/hadoop/hadoop/sbin:$PATH
+                 export JAVA_HOME={{ java_home }}
+
+        - name: Ansible create file with content example
+          copy:
+            dest: "/home/hadoop/.bashrc"
+            content: |
+                 export PATH=/home/hadoop/hadoop/bin:/home/hadoop/hadoop/sbin:$PATH
+                 export JAVA_HOME={{ java_home }}
 
         - name: moving the files
           template: src={{item.src}} dest={{item.dest}} 
@@ -52,3 +60,8 @@
               - { src: 'templates/mapred-site.xml', dest: '/home/hadoop/hadoop/etc/hadoop/mapred-site.xml' }
               - { src: 'templates/yarn-site.xml', dest: '/home/hadoop/hadoop/etc/hadoop/yarn-site.xml' }
               - { src: 'templates/slaves', dest: '/home/hadoop/hadoop/etc/hadoop/slaves' }
+
+        - name: permission for hdfs env
+          file:
+           path: /home/hadoop/hadoop/etc/hadoop-env.sh
+           mode:  0755
