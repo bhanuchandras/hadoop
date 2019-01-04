@@ -4,14 +4,14 @@
   Devops Tools used are
   <li> terraform
   <li> Ansible
-
+<br>
 <h3> Infrastructre </h3> 
   Building the infrastructure from ground zero needs provisioning which can be done by terraform .
   terraform init
   terraform apply 
   
   will do the job of provisioning the VM's
-  
+  <br>
  <h3> Provisioning </h3>
   In Provisioning Ansible will do most of the part with minimal installation 
   i am using cloud-shell / laptop with ansible installation and using ansible we can do 
