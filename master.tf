@@ -25,8 +25,24 @@ resource "google_compute_instance" "hadoop-m" {
       private_key = "${file("/home/bhanuchandra_sabbavarapu/.ssh/google_compute_engine")}"
     }
   }
+  tags = ["http-server"]
+
 }
 
-output "master-ips" {
-  value = ["${google_compute_instance.hadoop-m.*.network_interface.0.address}"]
+resource "google_compute_firewall" "http-server" {
+  name    = "new-allow-http"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["50070"]
+  }
+
+  // Allow traffic from everywhere to instances with an http-server tag
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["http-server"]
+}
+
+output "ip" {
+  value = "${google_compute_instance.hadoop-m.network_interface.0.access_config.0.nat_ip}"
 }
