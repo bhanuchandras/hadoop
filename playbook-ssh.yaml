@@ -35,17 +35,3 @@
     lineinfile:
        dest: "/home/hadoop/.ssh/authorized_keys"
        line: "{{ hostvars[groups['hadoop-master'][0]]['public_key'] }}"
-
-- hosts: all
-  gather_facts: false
-
-  tasks:
-  - name: Scan and save host keys
-    shell: "ssh-keyscan -t ecdsa {{ ansible_host }}"
-    register: ssh_keyscan_results
-    changed_when: false
-
-  - name: Add host keys to local known_hosts file
-    known_hosts:
-      name: "{{ ansible_host }}"
-      key: "{{ ssh_keyscan_results.stdout }}"
