@@ -1,5 +1,5 @@
 ---
-- hosts: hadoop-master
+- hosts: all
   become: yes
   tasks:
   - name: installing stackdriver agent
