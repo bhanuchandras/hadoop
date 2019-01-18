@@ -1,0 +1,36 @@
+---
+- hosts: hadoop-master
+  become: yes
+  tasks:
+  - name: installing stackdriver agent
+    shell: curl https://dl.google.com/cloudagents/install-logging-agent.sh|sudo bash -
+    args:
+      warn: no
+
+  - name: make dir
+    file:
+        path: "/etc/google/auth"
+        state: directory
+
+  - name: moving the files
+    template: src={{item.src}} dest={{item.dest}}
+    with_items:
+          - { src: 'templates/temp.json', dest: '/etc/google/auth/application_default_credentials.json' }
+          - { src: 'templates/hadoop.conf', dest: '/etc/google-fluentd/config.d/hadoop.conf'}
+
+  - name: permission for hdfs env
+    file:
+     path: /etc/google/auth/application_default_credentials.json
+     group: root
+     owner: root
+     mode:  0400
+
+  - name: touching pos file
+    file:
+     path: /var/lib/google-fluentd/pos/hadoop.pos
+     state: touch
+
+  - name: Restart service fluentd
+    service:
+     name: google-fluentd 
+     state: restarted
