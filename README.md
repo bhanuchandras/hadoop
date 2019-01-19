@@ -1,4 +1,4 @@
-# Terraform + anisble steps to add a hadoop cluster
+# Terraform + ansible steps to add a hadoop cluster
 
 This project uses terraform for provisioning the infrastructure and anisble for building the software.
 
