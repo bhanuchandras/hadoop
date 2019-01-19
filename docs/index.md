@@ -12,10 +12,10 @@ In case if you want to see how the whole hadoop cluster set up will be done in s
   Building the infrastructure from ground zero needs provisioning which can be done by terraform.
 <br>
    
-<code>
-  terraform init <br>
+<pre><code>
+  terraform init 
   terraform apply 
-</code>
+</code></pre>
 <br>
   will do the job of provisioning the VM's
   <br>
