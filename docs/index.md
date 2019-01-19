@@ -13,7 +13,7 @@ In case if you want to see how the whole hadoop cluster set up will be done in s
 <br>
    
 <code>
-  terraform init
+  terraform init <br>
   terraform apply 
 </code>
 <br>
