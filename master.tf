@@ -35,7 +35,7 @@ resource "google_compute_firewall" "http-server" {
 
   allow {
     protocol = "tcp"
-    ports    = ["50070"]
+    ports    = ["9870"]
   }
 
   // Allow traffic from everywhere to instances with an http-server tag
