@@ -11,20 +11,20 @@
 
         - name: Gets tarball
           get_url:
-            url="https://www-eu.apache.org/dist/hadoop/common/stable/hadoop-2.9.2.tar.gz"
+            url="https://www-eu.apache.org/dist/hadoop/common/hadoop-3.2.0/hadoop-3.2.0.tar.gz"
             dest="/home/hadoop"
           when: installation.stat.exists == False
           register: new_archive
 
         - name: Unarchive source
           unarchive:
-            src="/home/hadoop/hadoop-2.9.2.tar.gz"
+            src="/home/hadoop/hadoop-3.2.0.tar.gz"
             dest="/home/hadoop/"
             copy=no
           when: new_archive is changed
 
         - name: Remove the hadoop.tar
-          file: path=/home/hadoop/hadoop-2.9.2.tar.gz state=absent
+          file: path=/home/hadoop/hadoop-3.2.0.tar.gz state=absent
 
         - shell: /usr/bin/java -XshowSettings:properties -version 2>&1 | grep java.home | cut -d'=' -f2 | tr -d ' '
           register: java_op
@@ -34,7 +34,7 @@
         - debug:
             var=java_home
         - name: rename the dir
-          command: mv /home/hadoop/hadoop-2.9.2 /home/hadoop/hadoop
+          command: mv /home/hadoop/hadoop-3.2.0 /home/hadoop/hadoop
           when: new_archive|changed
 
         - name: Ansible create file with content example
