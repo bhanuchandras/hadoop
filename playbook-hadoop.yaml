@@ -37,21 +37,21 @@
           command: mv /home/hadoop/hadoop-3.2.0 /home/hadoop/hadoop
           when: new_archive|changed
 
-        - name: Ansible create file with content example
+        - name: Ansible create file profile
           copy:
             dest: "/home/hadoop/.profile"
             content: |
                  export PATH=/home/hadoop/hadoop/bin:/home/hadoop/hadoop/sbin:$PATH
                  export JAVA_HOME={{ java_home }}
 
-        - name: Ansible create file with content example
+        - name: Ansible create file bashrc
           copy:
             dest: "/home/hadoop/.bashrc"
             content: |
                  export PATH=/home/hadoop/hadoop/bin:/home/hadoop/hadoop/sbin:$PATH
                  export JAVA_HOME={{ java_home }}
 
-        - name: moving the files
+        - name: moving the files config file
           template: src={{item.src}} dest={{item.dest}} 
           with_items:
               - { src: 'templates/hadoop-env.sh', dest: '/home/hadoop/hadoop/etc/hadoop-env.sh' }
