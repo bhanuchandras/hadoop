@@ -15,9 +15,6 @@
   - set_fact: 
       public_key={{ pub_key.stdout }}
 
-  - debug:
-      var=public_key
- 
 - hosts: all
   become: yes
   become_user: hadoop
