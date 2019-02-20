@@ -40,4 +40,16 @@
         <name>yarn.nodemanager.vmem-check-enabled</name>
         <value>false</value>
 </property>
+<property>
+	 <name>yarn.app.mapreduce.am.env</name>
+	 <value>HADOOP_MAPRED_HOME=/home/hadoop/hadoop/</value>
+</property>
+<property>
+	 <name>mapreduce.map.env</name>
+	 <value>HADOOP_MAPRED_HOME=/home/hadoop/hadoop/</value>
+</property>
+<property>
+	<name>mapreduce.reduce.env</name>
+	<value>HADOOP_MAPRED_HOME=/home/hadoop/hadoop/</value>
+</property>
 </configuration>

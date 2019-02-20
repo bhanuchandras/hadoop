@@ -5,6 +5,10 @@
   tasks:
   - name: Install java
     yum: pkg=java-1.8.0-openjdk-src.x86_64 state=present
+
+  - name: Install java
+    yum: pkg=wget state=present
+
   - name: create group
     group:
       name: hadoop
