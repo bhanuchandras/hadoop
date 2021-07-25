@@ -1,5 +1,5 @@
 resource "google_compute_instance" "hadoop-n" {
-  project      = "cloudjupyter-bhanu"
+  project      = "nimble-ally-320910"
   count	       = 2
   machine_type = "g1-small"
   zone         = "asia-south1-a"
@@ -15,8 +15,4 @@ resource "google_compute_instance" "hadoop-n" {
     access_config {
     }
   }
-}
-
-output "node-ips" {
-  value = ["${google_compute_instance.hadoop-n.*.network_interface.0.address}"]
 }

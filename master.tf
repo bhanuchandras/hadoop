@@ -1,5 +1,5 @@
 resource "google_compute_instance" "hadoop-m" {
-  project      = "cloudjupyter-bhanu"
+  project      = "nimble-ally-320910"
   machine_type = "g1-small"
   zone         = "asia-south1-a"
   name = "hadoop-master"
@@ -15,14 +15,15 @@ resource "google_compute_instance" "hadoop-m" {
     }
   }
   provisioner "file" {
-    source = "/home/bhanuchandra_sabbavarapu/.ssh/google_compute_engine"
-    destination = "/home/bhanuchandra_sabbavarapu/.ssh/google_compute_engine"
+    source = "/home/bhanucs2021/.ssh/google_compute_engine"
+    destination = "/home/bhanucs2021/.ssh/google_compute_engine"
     connection {
       type    = "ssh"
-      user    = "bhanuchandra_sabbavarapu"
+      user    = "bhanucs2021"
       timeout = "120s"
+      host    = "${google_compute_instance.hadoop-m.network_interface.0.access_config.0.nat_ip}"
       agent       = false
-      private_key = "${file("/home/bhanuchandra_sabbavarapu/.ssh/google_compute_engine")}"
+      private_key = "${file("/home/bhanucs2021/.ssh/google_compute_engine")}"
     }
   }
   tags = ["http-server"]
@@ -43,6 +44,3 @@ resource "google_compute_firewall" "http-server" {
   target_tags   = ["http-server"]
 }
 
-output "ip" {
-  value = "${google_compute_instance.hadoop-m.network_interface.0.access_config.0.nat_ip}"
-}

@@ -24,10 +24,10 @@
       createhome: yes        # Defaults to yes
       home: /home/hadoop  # Defaults to /home/<username>
   - copy:
-       src: /home/bhanuchandra_sabbavarapu/.ssh/google_compute_engine
-       dest: /home/bhanuchandra_sabbavarapu/.ssh/google_compute_engine
-       owner: bhanuchandra_sabbavarapu
-       group: bhanuchandra_sabbavarapu
+       src: /home/bhanucs2021/.ssh/google_compute_engine
+       dest: /home/bhanucs2021/.ssh/google_compute_engine
+       owner: bhanucs2021
+       group: bhanucs2021
        mode: 0600
   - file:
        dest: /home/hadoop/.ssh
@@ -35,7 +35,7 @@
        group: hadoop
        state: directory
   - copy:
-       src: /home/bhanuchandra_sabbavarapu/.ssh/google_compute_engine
+       src: /home/bhanucs2021/.ssh/google_compute_engine
        dest: /home/hadoop/.ssh/google_compute_engine
        owner: hadoop
        group: hadoop
