@@ -3,11 +3,12 @@
   gather_facts: yes
   become: yes
   tasks:
-  - name: Install java
-    yum: pkg=java-1.8.0-openjdk-src.x86_64 state=present
+  
+  - name: Install wget packages
+    yum: pkg=wget state=present
 
   - name: Install java
-    yum: pkg=wget state=present
+    yum: pkg=java-11-openjdk-devel state=present
 
   - name: create group
     group:

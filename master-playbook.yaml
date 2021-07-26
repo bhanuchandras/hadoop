@@ -1,0 +1,6 @@
+---
+- import_playbook: playbook.yaml
+- import_playbook: playbook-ssh.yaml
+- import_playbook: playbook-knownhost.yaml
+- import_playbook: playbook-hadoop.yaml
+#- import_playbook: playbook-logs.yaml
