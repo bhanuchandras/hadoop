@@ -1,0 +1,20 @@
+---
+- hosts: hadoop-master
+  become: yes
+  become_user: hadoop
+  tasks:
+
+  - name: Format hdfs
+    shell: |
+     source ~/.bashrc
+     /home/hadoop/hadoop/bin/hdfs namenode -format bhanu-test-cl
+
+  - name: Start DFS 
+    shell: |
+     source ~/.bashrc
+     /home/hadoop/hadoop/sbin/start-dfs.sh 
+
+  - name: Start yarn 
+    shell: |
+     source ~/.bashrc
+     /home/hadoop/hadoop/sbin/start-yarn.sh 

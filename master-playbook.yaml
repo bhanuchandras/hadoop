@@ -4,3 +4,4 @@
 - import_playbook: playbook-knownhost.yaml
 - import_playbook: playbook-hadoop.yaml
 - import_playbook: playbook-logs.yaml
+- import_playbook: playbook-startcluster.yaml
