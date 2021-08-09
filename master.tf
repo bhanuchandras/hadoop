@@ -1,7 +1,7 @@
 resource "google_compute_instance" "hadoop-m" {
   project      = "nimble-ally-320910"
   machine_type = "g1-small"
-  zone         = "asia-south1-a"
+  zone         = "asia-south1-b"
   name = "hadoop-master"
 
   boot_disk {

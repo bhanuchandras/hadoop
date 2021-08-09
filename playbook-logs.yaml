@@ -1,9 +1,13 @@
+
+
 ---
 - hosts: all
   become: yes
   tasks:
   - name: installing stackdriver agent
-    shell: curl https://dl.google.com/cloudagents/install-logging-agent.sh|sudo bash -
+    shell: |
+      curl -sSO https://dl.google.com/cloudagents/add-logging-agent-repo.sh 
+      sudo bash add-logging-agent-repo.sh --also-install --structured
     args:
       warn: no
 
