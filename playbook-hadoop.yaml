@@ -9,6 +9,11 @@
             path: /home/hadoop/hadoop
           register: installation
 
+        - name: check if installation exists
+          stat:
+            path: /home/hadoop/spark
+          register: installation_s
+
         - name: Gets tarball
           get_url:
             url="https://downloads.apache.org/hadoop/common/hadoop-3.3.1/hadoop-3.3.1-aarch64.tar.gz"
@@ -16,12 +21,29 @@
           when: installation.stat.exists == False
           register: new_archive
 
+        - name: Gets tarball
+          get_url:
+            url="https://mirrors.estointernet.in/apache/spark/spark-3.1.2/spark-3.1.2-bin-hadoop3.2.tgz"
+            dest="/home/hadoop"
+          when: installation_s.stat.exists == False
+          register: new_spark
+
         - name: Unarchive source
           unarchive:
             src="/home/hadoop/hadoop-3.3.1-aarch64.tar.gz"
             dest="/home/hadoop/"
             copy=no
           when: new_archive is changed
+
+        - name: Unarchive source
+          unarchive:
+            src="/home/hadoop/spark-3.1.2-bin-hadoop3.2.tgz"
+            dest="/home/hadoop/"
+            copy=no
+          when: new_spark is changed
+
+        - name: Remove the spark.tar
+          file: path="/home/hadoop/spark-3.1.2-bin-hadoop3.2.tgz" state=absent
 
         - name: Remove the hadoop.tar
           file: path="/home/hadoop/hadoop-3.3.1-aarch64.tar.gz" state=absent
@@ -37,19 +59,29 @@
           command: mv /home/hadoop/hadoop-3.3.1 /home/hadoop/hadoop
           when: new_archive is changed
 
+        - name: rename the dir
+          command: mv /home/hadoop/spark-3.1.2-bin-hadoop3.2 /home/hadoop/spark
+          when: new_spark is changed
+
         - name: Ansible create file profile
           copy:
             dest: "/home/hadoop/.profile"
             content: |
-                 export PATH=/home/hadoop/hadoop/bin:/home/hadoop/hadoop/sbin:$PATH
+                 export PATH=/home/hadoop/hadoop/bin:/home/hadoop/hadoop/sbin:/home/hadoop/spark/bin:$PATH
                  export JAVA_HOME={{ java_home }}
+                 export HADOOP_CONF_DIR=/home/hadoop/hadoop/etc/hadoop
+                 export SPARK_HOME=/home/hadoop/spark
+                 export LD_LIBRARY_PATH=/home/hadoop/hadoop/lib/native:$LD_LIBRARY_PATH
 
         - name: Ansible create file bashrc
           copy:
             dest: "/home/hadoop/.bashrc"
             content: |
-                 export PATH=/home/hadoop/hadoop/bin:/home/hadoop/hadoop/sbin:$PATH
+                 export PATH=/home/hadoop/hadoop/bin:/home/hadoop/hadoop/sbin:/home/hadoop/spark/bin:$PATH
                  export JAVA_HOME={{ java_home }}
+                 export HADOOP_CONF_DIR=/home/hadoop/hadoop/etc/hadoop
+                 export SPARK_HOME=/home/hadoop/spark
+                 export LD_LIBRARY_PATH=/home/hadoop/hadoop/lib/native:$LD_LIBRARY_PATH
 
         - name: moving the files config file
           template: src={{item.src}} dest={{item.dest}} 
@@ -60,6 +92,7 @@
               - { src: 'templates/mapred-site.xml', dest: '/home/hadoop/hadoop/etc/hadoop/mapred-site.xml' }
               - { src: 'templates/yarn-site.xml', dest: '/home/hadoop/hadoop/etc/hadoop/yarn-site.xml' }
               - { src: 'templates/workers', dest: '/home/hadoop/hadoop/etc/hadoop/workers' }
+              - { src: 'templates/spark-defaults.conf', dest: '/home/hadoop/spark/conf/spark-defaults.conf' }
 
         - name: permission for hdfs env
           file:

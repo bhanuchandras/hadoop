@@ -1,15 +1,11 @@
-
-
 ---
 - hosts: all
   become: yes
   tasks:
-  - name: installing stackdriver agent
+
+  - name: Format hdfs
     shell: |
-      curl -sSO https://dl.google.com/cloudagents/add-logging-agent-repo.sh 
-      sudo bash add-logging-agent-repo.sh --also-install --structured
-    args:
-      warn: no
+      curl -sSO https://dl.google.com/cloudagents/add-google-cloud-ops-agent-repo.sh && sudo bash add-google-cloud-ops-agent-repo.sh --also-install
 
   - name: make dir
     file:
@@ -20,7 +16,7 @@
     template: src={{item.src}} dest={{item.dest}}
     with_items:
           - { src: 'templates/temp.json', dest: '/etc/google/auth/application_default_credentials.json' }
-          - { src: 'templates/hadoop.conf', dest: '/etc/google-fluentd/config.d/hadoop.conf'}
+          - { src: 'templates/ops-config.yaml', dest: '/etc/google-cloud-ops-agent/config.yaml'}
 
   - name: permission for hdfs env
     file:
@@ -29,12 +25,12 @@
      owner: root
      mode:  0400
 
-  - name: touching pos file
-    file:
-     path: /var/lib/google-fluentd/pos/hadoop.pos
-     state: touch
+#  - name: touching pos file
+#    file:
+#     path: /var/lib/google-fluentd/pos/hadoop.pos
+#     state: touch
 
-  - name: Restart service fluentd
+  - name: Restart service ops-agent
     service:
-     name: google-fluentd 
+     name: google-cloud-ops-agent
      state: restarted

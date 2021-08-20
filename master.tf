@@ -1,9 +1,9 @@
 resource "google_compute_instance" "hadoop-m" {
   project      = "nimble-ally-320910"
   machine_type = "g1-small"
-  zone         = "asia-south1-b"
+  zone         = "asia-south2-c"
   name = "hadoop-master"
-
+ 
   boot_disk {
     initialize_params {
       image = "rhel-cloud/rhel-7"
@@ -27,6 +27,9 @@ resource "google_compute_instance" "hadoop-m" {
     }
   }
   tags = ["http-server"]
+    service_account {
+    scopes = ["cloud-platform"]
+  }
 
 }
 
@@ -42,5 +45,6 @@ resource "google_compute_firewall" "http-server" {
   // Allow traffic from everywhere to instances with an http-server tag
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["http-server"]
+
 }
 
