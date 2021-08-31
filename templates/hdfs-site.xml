@@ -31,4 +31,21 @@
             <name>dfs.replication</name>
             <value>2</value>
     </property>
+    <property>
+	<name>dfs.namenode.accesstime.precision</name>
+	<value>0</value>
+	<description>
+		The access time for HDFS file is precise up to this value. 
+		The default value is 1 hour. Setting a value of 0 disables
+		access times for HDFS.
+	</description>
+	</property>
+	<property>    
+		<name>dfs.nfs3.dump.dir</name>    
+		<value>/tmp/.hdfs-nfs</value> 
+	</property>
+	<property>    
+		<name>dfs.nfs.exports.allowed.hosts</name>    
+		<value>* rw</value> 
+	</property>
 </configuration>

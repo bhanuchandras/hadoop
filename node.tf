@@ -7,7 +7,7 @@ resource "google_compute_instance" "hadoop-n" {
 
   boot_disk {
     initialize_params {
-      image = "rhel-cloud/rhel-7"
+      image = "rhel-cloud/rhel-8"
     }
   }
   network_interface {

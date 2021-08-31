@@ -22,3 +22,12 @@
       key: "{{ item.stdout }}"
     with_items:
       - "{{ ssh_keyscan_results.results }}"
+
+  - name: Install nfs
+    yum: pkg=nfs-utils state=present
+
+  - name: Restart start
+    service:
+      name: nfs-server
+      state: started
+      state: enable
