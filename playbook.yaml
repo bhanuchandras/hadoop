@@ -10,9 +10,8 @@
   - name: Install java
     yum: pkg=java-11-openjdk-devel state=present
 
-  - name: Install java
+  - name: Install nfs
     yum: pkg=nfs-utils state=present
-
 
   - name: create group
     group:
@@ -37,17 +36,20 @@
       system: no             # Defaults to no
       createhome: yes        # Defaults to yes
       home: /home/hadoop  # Defaults to /home/<username>
+
   - copy:
        src: /home/bhanucs2021/.ssh/google_compute_engine
        dest: /home/bhanucs2021/.ssh/google_compute_engine
        owner: bhanucs2021
        group: bhanucs2021
        mode: 0600
+
   - file:
        dest: /home/hadoop/.ssh
        owner: hadoop
        group: hadoop
        state: directory
+
   - copy:
        src: /home/bhanucs2021/.ssh/google_compute_engine
        dest: /home/hadoop/.ssh/google_compute_engine
