@@ -1,0 +1,72 @@
+---
+- hosts: all
+  gather_facts: yes
+  become: yes
+  tasks:
+
+  - name: install git package
+    yum: pkg=git state=present
+
+  - name: Enable Root Login
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: '^PermitRootLogin'
+      line: "PermitRootLogin yes"
+      state: present
+      backup: yes
+
+  - name: Enable Password Auth
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: '^PasswordAuthentication'
+      line: "PasswordAuthentication yes"
+      state: present
+      backup: yes
+
+  - name: Enable Root Login
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: '^ChallengeResponseAuthentication'
+      line: "ChallengeResponseAuthentication yes"
+      state: present
+      backup: yes
+  
+  - name: Disableing SELinux state
+    selinux:
+      state: disabled
+
+  - name: Update Root users passcode
+    user:
+      name: root
+      update_password: always
+      password: "NsdT0W0.h6SWc"
+
+  - name: Reboot
+    reboot:
+
+  - name: Set Sysctl
+    sysctl:
+      name: vm.swappiness
+      value: '5'
+  - name: Disable THP support (Causes latcency and mem usage issues)
+    shell: echo never {{ ">" }} /sys/kernel/mm/transparent_hugepage/enabled
+
+  - name: Disan;e THP
+    shell: echo never {{ ">" }} /sys/kernel/mm/transparent_hugepage/defrag
+
+- hosts: hadoop-master
+  gather_facts: no
+  tasks:
+
+  - name: get cloudera exe
+    get_url:
+      url: https://archive.cloudera.com/cm7/7.4.4/cloudera-manager-installer.bin
+      dest: /home/bhanucs_01012022
+      mode: u+x
+    
+  - name: clone a github Repo.
+    git:
+      repo: https://bhanuchandras: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@github.com/bhanuchandras/hadoop.git
+      dest: /home/bhanucs_01012022/hadoop
+
+
