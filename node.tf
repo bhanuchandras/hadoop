@@ -1,6 +1,6 @@
 resource "google_compute_instance" "hadoop-n" {
   project      = "datacloud-20220501"
-  count	       = 3
+  count	       = 4
   machine_type = "e2-standard-2"
   zone         = "us-west1-a"
   name = "${format("hadoop-node-%03d", count.index + 1)}"
