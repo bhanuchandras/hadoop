@@ -1,8 +1,8 @@
 resource "google_compute_instance" "hadoop-n" {
-  project      = "maximal-beach-340105"
+  project      = "datacloud-20220501"
   count	       = 3
   machine_type = "e2-standard-2"
-  zone         = "us-central1-a"
+  zone         = "us-west1-a"
   name = "${format("hadoop-node-%03d", count.index + 1)}"
 
   boot_disk {
