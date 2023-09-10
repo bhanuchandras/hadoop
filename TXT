@@ -1,0 +1,24 @@
+
+
+
+sudo kdb5_util create -s
+kadmin.local
+add_principal admin/admin@HADOOP.COM
+
+/var/kerberos/krb5kdc/kdc.conf 
+/var/kerberos/krb5kdc/kadm5.acl
+/etc/krb5.conf
+(on all 3 hosts)
+systemctl enable kadmin
+systemctl enable krb5kdc
+systemctl restart kadmin                                      
+systemctl restart krb5kdc 
+kadmin:  modprinc -maxrenewlife 90day krbtgt/HADOOP.COM@HADOOP.COM
+Principal "krbtgt/HADOOP.COM@HADOOP.COM" modified.
+kadmin:  modprinc -maxrenewlife 90day +allow_renewable hue/hadoop-master.asia-south1-a.c.new-kube-project-391314.internal@HADOOP.COM
+Principal "hue/hadoop-master.asia-south1-a.c.new-kube-project-391314.internal@HADOOP.COM" modified.
+
+
+
+
+
