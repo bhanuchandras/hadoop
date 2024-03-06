@@ -1,13 +1,13 @@
 resource "google_compute_instance" "hadoop-n" {
-  project      = "datacloud-20220501"
-  count	       = 4
+  project      = "dl-9953189580"
+  count        = 2
   machine_type = "e2-standard-2"
   zone         = "us-west1-a"
   name = "${format("hadoop-node-%03d", count.index + 1)}"
 
   boot_disk {
     initialize_params {
-      image = "rhel-cloud/rhel-8"
+      image = "rhel-sap-cloud/rhel-8-8-sap-ha"
       size = 50
     }
   }
