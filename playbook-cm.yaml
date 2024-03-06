@@ -61,12 +61,43 @@
   - name: get cloudera exe
     get_url:
       url: https://archive.cloudera.com/cm7/7.4.4/cloudera-manager-installer.bin
-      dest: /home/bhanucs_01012022
+      dest: /home/bhanu_mar2024
       mode: u+x
     
   - name: clone a github Repo.
     git:
       repo: https://bhanuchandras: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@github.com/bhanuchandras/bigdata.git
-      dest: /home/bhanucs_01012022/hadoop
+      dest: /home/bhanu_mar2024/hadoop
+
+- name: Update Python alternatives to Python 3.8
+  hosts: hadoop-master
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Install Python 3.8 if not already installed
+      command: "dnf install -y python38"
+      ignore_errors: yes
+
+    - name: Set Python 3.8 as the default alternative
+      alternatives:
+        name: python3
+        path: /usr/bin/python3.8
+        priority: 1
+
+    - name: Create a virtual environment for Python 3.8
+      command: /usr/bin/python3.8 -m venv /home/bhanu_mar2024/hadoop
+
+    - name: Activate the virtual environment
+      shell: source /home/bhanu_mar2024/hadoop/bin/activate
+      args:
+        executable: /bin/bash
+        chdir: /home/bhanu_mar2024/hadoop
 
 
+    - name: Install gcloud-bigquery and gcloud-auth packages
+      pip:
+        name:
+          - google-cloud-bigquery
+          - google-auth
+        executable: /home/bhanu_mar2024/hadoop/bin/pip
